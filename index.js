@@ -1,9 +1,15 @@
-function isSymmetric(root) {
-  if (!root) return true;
-  return isMirror(root.left, root.right);
-  function isMirror(left, right) {
-    if (!left && !right) return true;
-    if (!left || !right || left.val !== right.val) return false;
-    return isMirror(left.left, right.right) && isMirror(left.right, right.left);
+function isValidBST(root) {
+  const stack = [];
+  let inorder = -Infinity;
+  while (stack.length || root) {
+    while (root) {
+      stack.push(root);
+      root = root.left;
+    }
+    root = stack.pop();
+    if (root.val <= inorder) return false;
+    inorder = root.val;
+    root = root.right;
   }
+  return true;
 }
